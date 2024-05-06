@@ -1,0 +1,21 @@
+﻿@model Student;
+@{
+    ViewData["Title"] = "แก้ไขข้อมูล";
+}
+
+<h1 class="text-center">แก้ไขข้อมูล</h1>
+<!-- asp-controller คือการตั้งค่าปลายทางที่จะส่งไปทำงานที่ controller Student -->
+<!-- asp-action คือการตั้งค่าปลายทางที่จะส่งข้อมูลไปทำงานที่ action Edit แบบ POST -->
+<form method="post" asp-controller="Student" asp-action="Edit">
+    <div class="form-group">
+        <label asp-for="Name"></label> <!-- asp-for คือการอ้างถึง property Name ใน model -->
+        <input type="text" asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span><!--asp-validation-for ใช้ตรวจสอบโครงสร้างตาม property Name ใน model -->
+    </div>
+    <div class="form-group">
+        <label asp-for="Score"></label> <!-- asp-for คือการอ้างถึง property Score ใน model -->
+        <input type="number" asp-for="Score" class="form-control" />
+        <span asp-validation-for="Score" class="text-danger"></span> <!--asp-validation-for ใช้ตรวจสอบโครงสร้างตาม property Score ใน model -->
+    </div>
+    <button type="submit" class="btn btn-primary my-2">แก้ไข</button>
+</form>

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Student>; // IEnumerable ทำให้รับค่า object มากกว่า 1 ก้อน
+@{
+    ViewData["Title"] = "หน้าแรก";
+}
+
+<!--เช็คจำนวน Row ใน Model ว่ามีใน Table หรือไม่ -->
+@if (Model.Count() > 0)
+{
+    <h1 class="text-center">คะแนนสอบของนักเรียน</h1>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th> รหัสนักเรียน</th>
+                <th> ชื่อนักเรียน</th>
+                <th> คะแนนสอบ</th>
+                <th> แก้ไข</th>
+                <th> ลบ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Student s in Model) // นำเอา Model ที่ส่งจาก Controller Student มาแสดง
+            {
+                <tr>
+                    <td>@s.Id</td>
+                    <td>@s.Name</td>
+                    <td>@s.Score</td>
+                    <td>
+                        <!-- tag asp-controller คือการตั้งค่าปลายทางที่จะส่งไปทำงานที่ controller Student -->
+                        <!-- tag asp-action คือการตั้งค่าปลายทางที่จะส่งข้อมูลไปทำงานที่ action Edit -->
+                        <!-- ซึ่งการ Edit จะต้องส่ง Id ไปด้วยซึ่งจะใช้ tag asp-route-id -->
+                        <a class="btn btn-warning"
+                           asp-controller="Student"
+                           asp-action="Edit"
+                           asp-route-id="@s.Id">แก้ไข</a>
+                    </td>
+                    <td>
+                        <!-- tag asp-controller คือการตั้งค่าปลายทางที่จะส่งไปทำงานที่ controller Student -->
+                        <!-- tag asp-action คือการตั้งค่าปลายทางที่จะส่งข้อมูลไปทำงานที่ action Delete -->
+                        <!-- ซึ่งการ Delete จะต้องส่ง Id ไปด้วยซึ่งจะใช้ tag asp-route-id -->
+                        <!-- return confirm จะส่งค่าไปก็ต่อเมื่อกด ยืนยัน -->
+                        <a class="btn btn-danger"
+                           asp-controller="Student"
+                           asp-action="Delete"
+                           asp-route-id="@s.Id"
+                           onclick="return confirm('คุณต้องการลบ @s.Name หรือไม่ ?')">ลบ</a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+}
+else
+{
+    <div class="alert alert-secondary">ไม่มีข้อมูลนักเรียนในระบบ</div>
+}
+
+
+@* @foreach (Student s in Model)
+{
+    <p>รหัสนักเรียน : @s.Id</p>
+    <p>ชื่อ : @s.Name</p>
+    <p>คะแนนสอบ : @s.Score</p>
+    @if (s.Score > 50)
+    {
+        <strong class="text-success">สอบผ่าน</strong>   
+    }
+    else
+    {
+        <strong class="text-danger">สอบไม่ผ่าน</strong>
+    }
+    <hr/>
+} *@
